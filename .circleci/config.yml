@@ -7,7 +7,7 @@ version: 2.1
 #  welcome: circleci/welcome-orb@0.3.1
 
 jobs:
-  firelighter:
+  coronapi:
     docker:
       - image: circleci/node:10
     steps:
