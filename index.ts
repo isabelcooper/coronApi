@@ -5,9 +5,9 @@ import {Pool} from "pg";
 import {Server} from "./src/server";
 
 (async () => {
-  await new PostgresMigrator(EVENT_STORE_CONNECTION_DETAILS, './database/migrations').migrate();
-
-  const database = new PostgresDatabase(new Pool(EVENT_STORE_CONNECTION_DETAILS));
+  // await new PostgresMigrator(EVENT_STORE_CONNECTION_DETAILS, './database/migrations').migrate();
+  //
+  // const database = new PostgresMigratorresDatabase(new Pool(EVENT_STORE_CONNECTION_DETAILS));
   const server = new Server();
   server.start();
 })();
