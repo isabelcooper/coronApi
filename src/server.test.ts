@@ -22,4 +22,17 @@ describe('Server', () => {
     const response = await httpClient(ReqOf(Method.GET,`http://localhost:${port}/health`));
     expect(response.status).to.eql(200);
   });
+
+  // it('allow a record to be stored', async () => {
+  //   const status = {
+  //
+  //   };
+  //
+  //   const response = await httpClient(ReqOf(
+  //     Method.POST,
+  //     `http://localhost:${port}/status`,
+  //     status
+  //   ));
+  //   expect(response.status).to.eql(200);
+  // });
 });

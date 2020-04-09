@@ -1,12 +1,21 @@
-import {Pool} from "pg";
+import {Pool, PoolClient} from 'pg';
 
 export class PostgresDatabase {
-  constructor(private pool: Pool) {}
+  constructor(private pool: Pool){}
 
-  async query(sqlStatement: string) {
+  public async inTransaction<R>(fn: (client: PoolClient) => Promise<R>) {
     const client = await this.pool.connect();
-    const result = await client.query(sqlStatement);
-    await client.release();
-    return result
+    await client.query('BEGIN;');
+
+    try {
+      const result = await fn(client);
+      await client.query('COMMIT;');
+      return result;
+    } catch (e) {
+      await client.query('ROLLBACK;');
+      throw e;
+    } finally {
+      client.release();
+    }
   }
 }

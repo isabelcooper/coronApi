@@ -23,14 +23,14 @@ export class PostgresTestServer {
     };
   }
 
-  public async startAndGetFirelighterDatabase(): Promise<PostgresDatabase> {
+  public async startAndGetCoronapiDatabase(): Promise<PostgresDatabase> {
     const adminConnectionDetails = await this.start();
     await new PostgresMigrator(adminConnectionDetails, path.resolve('./database/bootstrap')).migrate();
 
-    const firelighterConnectionDetails = getCoronaConnectionDetails(adminConnectionDetails.port);
+    const coronapiConnectionDetails = getCoronaConnectionDetails(adminConnectionDetails.port);
 
-    await new PostgresMigrator(firelighterConnectionDetails, path.resolve('./database/migrations')).migrate();
-    return new PostgresDatabase(new Pool(firelighterConnectionDetails));
+    await new PostgresMigrator(coronapiConnectionDetails, path.resolve('./database/migrations')).migrate();
+    return new PostgresDatabase(new Pool(coronapiConnectionDetails));
   }
 
   public async stop() {
