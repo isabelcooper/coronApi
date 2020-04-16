@@ -36,9 +36,15 @@ install_node_dependencies () {
 
 run_tests() {
     cd API
+    echo "in dir API"
+    install_node_dependencies
+    echo "installed dependencies"
     npm run test
     cd ..
     cd UI
+    echo "in dir UI"
+    install_node_dependencies
+    echo "installed dependencies"
     npm run test
     cd ..
 }
@@ -65,12 +71,6 @@ case "${run_arg}" in
     ;;
 "ci")
     if ! version_check; then install_node; fi
-    cd API
-    install_node_dependencies
-    cd ..
-    cd UI
-    install_node_dependencies
-    cd ..
     run_tests
     API/deploy.sh
     ;;
