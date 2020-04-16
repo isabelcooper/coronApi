@@ -34,6 +34,15 @@ install_node_dependencies () {
     fi
 }
 
+run_tests() {
+    cd API
+    npm run test
+    cd ..
+    cd UI
+    npm run test
+    cd ..
+}
+
 run_arg="${1:-test}"
 case "${run_arg}" in
 "version_check")
@@ -47,7 +56,7 @@ case "${run_arg}" in
 "test")
     if ! version_check; then install_node; fi
     install_node_dependencies
-    npm run test
+    run_tests
     ;;
 "start")
     if ! version_check; then install_node; fi
@@ -57,8 +66,8 @@ case "${run_arg}" in
 "ci")
     if ! version_check; then install_node; fi
     install_node_dependencies
-    npm run test
-    ./deploy.sh
+    run_tests
+    API/deploy.sh
     ;;
  *)
     echo "Unexpected argument given:" $1

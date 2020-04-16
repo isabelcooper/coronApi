@@ -1,11 +1,10 @@
 {
   "name": "coronapi",
   "version": "1.0.0",
-  "description": "test commit",
   "main": "index.ts",
   "scripts": {
     "test": "mocha **/*.test.ts --require ts-node/register",
-    "start": "ts-node ./index.ts"
+    "start": "ts-node index.ts"
   },
   "repository": {
     "type": "git",
@@ -29,10 +28,10 @@
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
+    "@types/node": "^13.11.0",
+    "@types/pg": "^7.14.3",
     "chai": "^4.2.0",
     "mocha": "^7.1.1",
-    "testcontainers": "^2.7.0",
-    "@types/node": "^13.11.0",
-    "@types/pg": "^7.14.3"
+    "testcontainers": "^2.7.0"
   }
 }
