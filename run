@@ -65,7 +65,12 @@ case "${run_arg}" in
     ;;
 "ci")
     if ! version_check; then install_node; fi
+    cd API
     install_node_dependencies
+    cd ..
+    cd UI
+    install_node_dependencies
+    cd ..
     run_tests
     API/deploy.sh
     ;;
