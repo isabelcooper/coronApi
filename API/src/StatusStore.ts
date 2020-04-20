@@ -51,7 +51,7 @@ export interface StatusWriter {
 }
 
 export class InMemoryStatusWriter implements StatusWriter {
-  constructor(private statusStore: Status[]) {
+  constructor(public statusStore: Status[]) {
   }
 
   public async store(status: Status): Promise<void> {
