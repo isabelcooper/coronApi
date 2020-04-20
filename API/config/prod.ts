@@ -1,4 +1,5 @@
 import {ConnectionDetails} from "../database/postgres/PostgresMigrator";
+require('dotenv').config();
 
 export const STORE_CONNECTION_DETAILS : ConnectionDetails = {
   host: `/cloudsql/coronapi:us-central1:coronapi`,

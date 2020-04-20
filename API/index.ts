@@ -5,11 +5,19 @@ import {Pool} from "pg";
 import {Server} from "./src/server";
 import {StatusHandler} from "./src/StatusHandler";
 import {SqlStatusWriter} from "./src/SqlStatusStore";
+import {InMemoryStatusWriter} from "./src/StatusStore";
+require('dotenv').config();
 
 (async () => {
-  await new PostgresMigrator(STORE_CONNECTION_DETAILS, './database/migrations').migrate();
+  let statusWriter: any;
+  if (process.env.LOCAL) {
+    statusWriter = new InMemoryStatusWriter([]);
+  } else {
+    await new PostgresMigrator(STORE_CONNECTION_DETAILS, './database/migrations').migrate();
+    const database = new PostgresDatabase(new Pool(STORE_CONNECTION_DETAILS));
+    statusWriter = new SqlStatusWriter(database);
+  }
 
-  const database = new PostgresDatabase(new Pool(STORE_CONNECTION_DETAILS));
-  const server = new Server(new StatusHandler(new SqlStatusWriter(database)));
+  const server = new Server(new StatusHandler(statusWriter));
   server.start();
 })();
