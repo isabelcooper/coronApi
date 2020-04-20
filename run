@@ -34,18 +34,12 @@ install_node_dependencies () {
     fi
 }
 
-run_tests() {
-    cd API
-    echo "in dir API"
+run() {
+ arg_1="${1:-test}"
+ arg_2="${2:-api}"
+    cd "${arg_2}"
     install_node_dependencies
-    echo "installed dependencies"
-    npm run test
-    cd ..
-    cd UI
-    echo "in dir UI"
-    install_node_dependencies
-    echo "installed dependencies"
-    npm run test
+    npm run "${arg_1}"
     cd ..
 }
 
@@ -59,19 +53,42 @@ case "${run_arg}" in
         exit;
     fi
     ;;
-"test")
+"test-ui")
     if ! version_check; then install_node; fi
     install_node_dependencies
-    run_tests
+    run test UI
+    ;;
+"test-api")
+    if ! version_check; then install_node; fi
+    install_node_dependencies
+    run test API
+    ;;
+ "test")
+    if ! version_check; then install_node; fi
+    install_node_dependencies
+    run test API
+    run test UI
+    ;;
+"start-api")
+    if ! version_check; then install_node; fi
+    install_node_dependencies
+    run start API
+    ;;
+"start-ui")
+    if ! version_check; then install_node; fi
+    install_node_dependencies
+    run start UI
     ;;
 "start")
     if ! version_check; then install_node; fi
     install_node_dependencies
-    npm run start
+    run start API
+    run start UI
     ;;
 "ci")
     if ! version_check; then install_node; fi
-    run_tests
+    run test API
+    run test UI
     API/deploy.sh
     ;;
  *)
