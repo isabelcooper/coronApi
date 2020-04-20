@@ -24,8 +24,7 @@
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "jsx": "react",
-    "module": "esnext"
+    "jsx": "react"
   },
   "include": [
     "src"
