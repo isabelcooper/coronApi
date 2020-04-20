@@ -25,7 +25,7 @@ export const passThroughIfDefinedConversion = (value: any) => value !== undefine
 export const stringToSqlInteger = (value: string) => value && parseInt(value);
 export const stringToSqlFloat = (value: string) => value && parseFloat(value);
 export const stringToSqlString = (value: string) => value && `'${value}'`;
-export const stringEstDateToUtcString = (value: string) => value && `'${Dates.format(moment.tz(value, 'America/New_York').utc().toDate(), 'YYYY-MM-DD HH:mm:ss')}'`;
+// export const stringEstDateToUtcString = (value: string) => value && `'${Dates.format(moment.tz(value, 'America/New_York').utc().toDate(), 'YYYY-MM-DD HH:mm:ss')}'`;
 // export const dateToUtcString = (value: Date) => value && `'${Dates.format(value, Dates.YYYY_DASH_MM_DASH_DD_HH_MM_SS)}'`;
 
 export function column(fieldName: string, toSqlConverter: (value: any) => any = passThroughConversion) {
