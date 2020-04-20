@@ -5,7 +5,7 @@ set -e
 
 sudo apt-get install gettext
 
-envsubst < API/app.yaml.template > API/app.yaml
+envsubst < API/app.yaml.template > app.yaml
 
 if [[ ! $(command -v gcloud) ]]; then
     echo 'Installing gcloud sdk'
