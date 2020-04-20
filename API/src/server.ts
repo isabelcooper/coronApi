@@ -2,16 +2,17 @@ import {routes, Routing} from "http4js/core/Routing";
 import {Method} from "http4js/core/Methods";
 import {NativeHttpServer} from "http4js/servers/NativeHttpServer";
 import {ResOf} from "http4js/core/Res";
-import {StatusHandler} from "./StatusHandler";
+import {StatusStorageHandler} from "./StatusStorageHandler";
 
 require('dotenv').config();
 
 export class Server {
   private server: Routing;
 
-  constructor(statusHandler: StatusHandler, private port: number = 1010) {
+  constructor(statusStorageHandler: StatusStorageHandler, private port: number = 1010) {
     this.server = routes(Method.GET, '/health', async() => ResOf(200))
-      .withPost('/status', statusHandler)
+      .withPost('/status', statusStorageHandler)
+      // .withGet('/status', statusRetrievalHandler)
       .asServer(new NativeHttpServer(parseInt(process.env.PORT!) || this.port));
   }
 

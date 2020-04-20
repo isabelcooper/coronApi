@@ -4,19 +4,19 @@ import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
 import {buildStatus, InMemoryStatusWriter} from "./StatusStore";
-import {StatusHandler} from "./StatusHandler";
+import {StatusStorageHandler} from "./StatusStorageHandler";
 import {SqlStatusWriter} from "./SqlStatusStore";
 
 describe('Server', () => {
   const httpClient = HttpClient;
   const port = 1111;
   let server: Server;
-  let statusHandler: StatusHandler;
+  let statusHandler: StatusStorageHandler;
   let statusStore: [];
 
   beforeEach(async () => {
     statusStore = [];
-    statusHandler = new StatusHandler(new InMemoryStatusWriter(statusStore));
+    statusHandler = new StatusStorageHandler(new InMemoryStatusWriter(statusStore));
     server = new Server(statusHandler, port);
     server.start();
   });
@@ -30,7 +30,7 @@ describe('Server', () => {
     expect(response.status).to.eql(200);
   });
 
-  it('allow a record to be stored', async () => {
+  it('should allow a record to be stored', async () => {
     const status = buildStatus();
 
     const response = await httpClient(ReqOf(
@@ -40,4 +40,11 @@ describe('Server', () => {
     ));
     expect(response.status).to.eql(200);
   });
+  // it('should retrieve all records', async () => {
+  //   const response = await httpClient(ReqOf(
+  //     Method.GET,
+  //     `http://localhost:${port}/status`
+  //   ));
+  //   expect(response.status).to.eql(200);
+  // });
 });

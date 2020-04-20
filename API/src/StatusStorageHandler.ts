@@ -3,7 +3,7 @@ import {Req} from "http4js/core/Req";
 import {Res, ResOf} from "http4js/core/Res";
 import {buildStatus, StatusWriter} from "./StatusStore";
 
-export class StatusHandler implements Handler {
+export class StatusStorageHandler implements Handler {
   constructor(private statusWriter: StatusWriter){};
    public async handle(req: Req): Promise<Res> {
      const body = JSON.parse(req.body.bodyString());
