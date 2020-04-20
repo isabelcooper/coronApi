@@ -3,14 +3,21 @@ import {Server} from "./server";
 import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
+import {buildStatus, InMemoryStatusWriter} from "./StatusStore";
+import {StatusHandler} from "./StatusHandler";
+import {SqlStatusWriter} from "./SqlStatusStore";
 
 describe('Server', () => {
   const httpClient = HttpClient;
   const port = 1111;
   let server: Server;
+  let statusHandler: StatusHandler;
+  let statusStore: [];
 
   beforeEach(async () => {
-    server = new Server(port);
+    statusStore = [];
+    statusHandler = new StatusHandler(new InMemoryStatusWriter(statusStore));
+    server = new Server(statusHandler, port);
     server.start();
   });
 
@@ -23,16 +30,14 @@ describe('Server', () => {
     expect(response.status).to.eql(200);
   });
 
-  // it('allow a record to be stored', async () => {
-  //   const status = {
-  //
-  //   };
-  //
-  //   const response = await httpClient(ReqOf(
-  //     Method.POST,
-  //     `http://localhost:${port}/status`,
-  //     status
-  //   ));
-  //   expect(response.status).to.eql(200);
-  // });
+  it('allow a record to be stored', async () => {
+    const status = buildStatus();
+
+    const response = await httpClient(ReqOf(
+      Method.POST,
+      `http://localhost:${port}/status`,
+      JSON.stringify(status)
+    ));
+    expect(response.status).to.eql(200);
+  });
 });
