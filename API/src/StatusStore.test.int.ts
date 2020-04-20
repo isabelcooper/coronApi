@@ -40,7 +40,9 @@ describe('SqlStatusStore', function () {
       const status2 = buildStatus();
       await statusWriter.store(status1);
       await statusWriter.store(status2);
-      expect(await statusReader.readAll()).to.have.deep.members([status1, status2])
+      //TODO: amend mapper to convert stored timestamp back to date
+      expect(await statusReader.readAll()).to.deep.equal([status1, status2]);
+      expect((await statusReader.readAll())[0].updated).to.eql(new Date(status1.updated));
     });
   };
 

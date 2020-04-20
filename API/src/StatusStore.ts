@@ -33,11 +33,11 @@ export function buildStatus(partial?: Partial<Status>): Status {
 }
 
 export class InMemoryStatusReader implements StatusReader {
-  constructor(private store: Status[]) {
+  constructor(public statusStore: Status[]) {
   }
 
   public async readAll(): Promise<Status[]> {
-    return this.store;
+    return this.statusStore;
   }
 
 }
