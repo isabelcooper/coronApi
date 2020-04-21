@@ -3,11 +3,12 @@ import {Server} from "./server";
 import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {buildStatus, InMemoryStatusReader, InMemoryStatusWriter} from "./StatusStore";
+import {InMemoryStatusReader, InMemoryStatusWriter} from "./StatusStore";
 import {StatusStorageHandler} from "./StatusStorageHandler";
 import {SqlStatusWriter} from "./SqlStatusStore";
 import {Status} from "http4js/core/Status";
 import {StatusRetrievalHandler} from "./StatusRetrievalHandler";
+import {buildStatus} from "../../shared/Status";
 
 describe('Server', () => {
   const httpClient = HttpClient;

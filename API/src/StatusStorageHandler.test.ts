@@ -1,8 +1,9 @@
-import {buildStatus, InMemoryStatusWriter} from "./StatusStore";
+import {InMemoryStatusWriter} from "./StatusStore";
 import {ReqOf} from "http4js/core/Req";
 import {StatusStorageHandler} from "./StatusStorageHandler";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
+import {buildStatus} from "../../shared/Status";
 
 describe('StatusStorageHandler', () => {
   it('should store a status', async () => {

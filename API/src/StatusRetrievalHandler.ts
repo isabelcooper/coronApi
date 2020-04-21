@@ -1,7 +1,8 @@
 import {Handler} from "http4js/core/HttpMessage";
 import {Req} from "http4js/core/Req";
 import {Res, ResOf} from "http4js/core/Res";
-import {buildStatus, StatusReader, StatusWriter} from "./StatusStore";
+import {StatusReader, StatusWriter} from "./StatusStore";
+import {buildStatus} from "../../shared/Status";
 
 export class StatusRetrievalHandler implements Handler {
   constructor(private statusReader: StatusReader){};

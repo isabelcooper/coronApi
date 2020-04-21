@@ -1,10 +1,11 @@
-import {buildStatus, InMemoryStatusReader, InMemoryStatusWriter} from "./StatusStore";
+import {InMemoryStatusReader, InMemoryStatusWriter} from "./StatusStore";
 import {ReqOf} from "http4js/core/Req";
 import {StatusStorageHandler} from "./StatusStorageHandler";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
 import {StatusRetrievalHandler} from "./StatusRetrievalHandler";
 import {Dates} from "../utils/Dates";
+import {buildStatus} from "../../shared/Status";
 
 describe('StatusRetrievalHandler', () => {
   it('should retrieve all statuses', async () => {

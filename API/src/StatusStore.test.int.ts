@@ -2,14 +2,13 @@ import {expect} from "chai";
 import {PostgresTestServer} from "../database/postgres/PostgresTestServer";
 import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
 import {
-  buildStatus,
   InMemoryStatusReader,
   InMemoryStatusWriter,
-  Status,
   StatusReader,
   StatusWriter
 } from "./StatusStore";
 import {SqlStatusReader, SqlStatusWriter} from "./SqlStatusStore";
+import {buildStatus, Status} from "../../shared/Status";
 
 describe('SqlStatusStore', function () {
   this.timeout(30000);
