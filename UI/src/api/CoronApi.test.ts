@@ -2,8 +2,13 @@ import {expect} from "chai";
 import {buildStatus, Status} from "../../../shared/Status";
 import {Random} from "../../../API/utils/Random";
 import {AlwaysFailCoronApiClient, CoronApiClient, InMemoryCoronApiClient} from "./CoronApi";
+import {CoronApiHttpClient} from "./CoronApiHttpClient";
+import {Server} from "../../../API/src/server";
+import {StatusStorageHandler} from "../../../API/src/StatusStorageHandler";
+import {StatusRetrievalHandler} from "../../../API/src/StatusRetrievalHandler";
+import {InMemoryStatusReader, InMemoryStatusWriter} from "../../../API/src/StatusStore";
 
-function buildRandomSetOfStatuses(rows? :number): Status[] {
+function buildRandomSetOfStatuses(rows?: number): Status[] {
   let i: number;
   const jsonRota = [];
   for (i = 0; i <= (rows || Random.integer(20)); i++) {
@@ -13,32 +18,63 @@ function buildRandomSetOfStatuses(rows? :number): Status[] {
 }
 
 describe('CoronApi', () => {
-  const statuses = buildRandomSetOfStatuses();
-  let coronApiClient: CoronApiClient;
+  const store: Status[] = [];
+  const server = new Server(new StatusStorageHandler(new InMemoryStatusWriter(store)), new StatusRetrievalHandler(new InMemoryStatusReader(store)));
 
-  it('should get all statuses', async () => {
-    coronApiClient = new InMemoryCoronApiClient(statuses);
-
-    const response = await coronApiClient.getAllStatuses();
-    expect(response.success).to.eql(true);
-    expect(response.payload.length).to.eql(statuses.length);
-    expect(response.payload[0].country).to.eql(statuses[0].country);
-    //TODO: improve dates to deep equal in formatting
-    // expect(response.statuses).to.eql(statuses);
+  before( () => {
+    server.start()
   });
 
-  it('should store status updates for a specific country', async () => {
-    coronApiClient = new InMemoryCoronApiClient();
-
-    const status = buildStatus();
-    const response = await coronApiClient.sendStatus(status);
-    expect(response.success).to.eql(true);
-    expect(coronApiClient.storedStatuses).to.eql([status]);
+  after( () => {
+    server.start()
   });
 
-  it('should return errors from the api', async () => {
-    const apiClient = new AlwaysFailCoronApiClient();
-    const response = await apiClient.getAllStatuses();
-    expect(response).to.eql({ payload: "", success: false, message: 'error'});
-  });
+
+  const coronApiContract = (coronApiFn: () => CoronApiClient, cleanupFn: () => Promise<void>) => () => {
+    const coronApiClient = coronApiFn();
+    let statuses: Status[];
+
+    beforeEach(async () => {
+      statuses = buildRandomSetOfStatuses();
+      await cleanupFn();
+    });
+
+    it('should store and get all statuses', async () => {
+      await Promise.all(statuses.map(async(status) => {
+        const response = await coronApiClient.sendStatus(status);
+        expect(response.success).to.eql(true);
+      }));
+
+      const response = await coronApiClient.getAllStatuses();
+      expect(response.success).to.eql(true);
+
+      const payload = JSON.parse(response.payload);
+      expect(payload.length).to.eql(statuses.length);
+      expect(payload[0].country).to.eql(statuses[0].country);
+    });
+  };
+
+  const inMemoryCoronApiClient = new InMemoryCoronApiClient();
+  const coronApiHttpClient = new CoronApiHttpClient('http://localhost:1010');
+
+  describe('InMemoryCoronApiClient', coronApiContract(
+    () => inMemoryCoronApiClient,
+    async () => {
+      inMemoryCoronApiClient.storedStatuses = []
+    }
+  ));
+
+  describe('HttpCoronApiClient', coronApiContract(
+    () => coronApiHttpClient,
+    async () => {}
+  ));
+
+  describe('Handling failure', () => {
+    it('should return errors from the api', async () => {
+      const apiClient = new AlwaysFailCoronApiClient();
+      const response = await apiClient.getAllStatuses();
+      expect(response).to.eql({payload: "", success: false, message: 'error'});
+    });
+  })
+
 });

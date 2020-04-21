@@ -10,7 +10,6 @@ export interface Result<T = any> {
 export interface CoronApiClient {
   getAllStatuses(): Promise<Result>;
   sendStatus(status: Status): Promise<Result>;
-  storedStatuses?: Status[];
 }
 
 export class InMemoryCoronApiClient implements CoronApiClient {
@@ -26,7 +25,7 @@ export class InMemoryCoronApiClient implements CoronApiClient {
   public async getAllStatuses(): Promise<Result> {
     return {
       success: true,
-      payload: this.storedStatuses
+      payload: JSON.stringify(this.storedStatuses)
     }
   }
 
