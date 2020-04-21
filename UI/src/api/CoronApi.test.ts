@@ -1,7 +1,7 @@
 import {expect} from "chai";
-import {CoronApi} from "./CoronApi";
 import {buildStatus, Status} from "../../../shared/Status";
 import {Random} from "../../../API/utils/Random";
+import {AlwaysFailCoronApiClient, CoronApiClient, InMemoryCoronApiClient} from "./CoronApi";
 
 function buildRandomSetOfStatuses(rows? :number): Status[] {
   let i: number;
@@ -13,43 +13,32 @@ function buildRandomSetOfStatuses(rows? :number): Status[] {
 }
 
 describe('CoronApi', () => {
-  it('gets transformed data', async () => {
-    const statuses = buildRandomSetOfStatuses();
+  const statuses = buildRandomSetOfStatuses();
+  let coronApiClient: CoronApiClient;
 
-    const workingFetch = async (_input: RequestInfo, _options?: RequestInit): Promise<Response> => {
-      async function getText() {
-        return JSON.stringify({statuses});
-      }
-      return {status: 200, text: getText} as Response;
-    };
-    const coronApi = new CoronApi('', workingFetch);
-    const response = await coronApi.getAllStatuses();
-    expect(response.statuses.length).to.eql(statuses.length);
-    expect(response.statuses[0].country).to.eql(statuses[0].country);
-    expect(response.statuses[0].flightStatus).to.eql(statuses[0].flightStatus);
+  it('should get all statuses', async () => {
+    coronApiClient = new InMemoryCoronApiClient(statuses);
+
+    const response = await coronApiClient.getAllStatuses();
+    expect(response.success).to.eql(true);
+    expect(response.payload.length).to.eql(statuses.length);
+    expect(response.payload[0].country).to.eql(statuses[0].country);
     //TODO: improve dates to deep equal in formatting
     // expect(response.statuses).to.eql(statuses);
   });
 
-  it('returns errors from the api', async () => {
-    const errorFetch = async (_input: RequestInfo, _options?: RequestInit): Promise<Response> => {
-      async function getText() {
-        return JSON.stringify({error: 'error getting data from db'});
-      }
-      return { status: 500, text: getText } as Response;
-    };
-    const rotaApi = new CoronApi('', errorFetch);
-    const rota = await rotaApi.getAllStatuses();
-    expect(rota).to.eql({statuses: [], error: 'error getting data from db'})
+  it('should store status updates for a specific country', async () => {
+    coronApiClient = new InMemoryCoronApiClient();
+
+    const status = buildStatus();
+    const response = await coronApiClient.sendStatus(status);
+    expect(response.success).to.eql(true);
+    expect(coronApiClient.storedStatuses).to.eql([status]);
   });
 
-  it('handles fetch errors', async() => {
-    const failedFetch = async (_input: RequestInfo, _options?: RequestInit): Promise<Response> => {
-      throw new Error('failed to fetch')
-    };
-    const surveyApi = new CoronApi('', failedFetch);
-    const rotaRows = await surveyApi.getAllStatuses();
-    expect(rotaRows).to.eql({statuses: [], error: 'failed to fetch'})
+  it('should return errors from the api', async () => {
+    const apiClient = new AlwaysFailCoronApiClient();
+    const response = await apiClient.getAllStatuses();
+    expect(response).to.eql({ payload: "", success: false, message: 'error'});
   });
-
 });
