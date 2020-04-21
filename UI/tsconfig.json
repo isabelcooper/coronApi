@@ -15,7 +15,7 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "noEmit": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -24,8 +24,16 @@
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "jsx": "react"
+    "jsx": "react",
+    "module": "esnext"
   },
+  "exclude": [
+    "./node_modules/*",
+    "./src/api/CoronApi.ts",
+    "./src/api/CoronApi.test.int.ts",
+    "./src/api/CoronApiHttpClient.ts",
+    "./src/api/SimpleHttpClient.ts"
+  ],
   "include": [
     "src"
   ]
