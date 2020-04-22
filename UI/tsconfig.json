@@ -29,10 +29,10 @@
   },
   "exclude": [
     "./node_modules/*",
-    "./src/api/CoronApi.ts",
-    "./src/api/CoronApi.test.int.ts",
-    "./src/api/CoronApiHttpClient.ts",
-    "./src/api/SimpleHttpClient.ts"
+    "./src/api/*",
+    "./src/App.tsx",
+    "./src/index.tsx",
+    "./src/Status.tsx"
   ],
   "include": [
     "src"
