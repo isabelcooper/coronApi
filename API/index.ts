@@ -3,10 +3,10 @@ import {STORE_CONNECTION_DETAILS} from "./config/prod";
 import {PostgresMigrator} from "./database/postgres/PostgresMigrator";
 import {Pool} from "pg";
 import {Server} from "./src/server";
-import {StatusStorageHandler} from "./src/StatusStorageHandler";
-import {SqlStatusReader, SqlStatusWriter} from "./src/SqlStatusStore";
-import {InMemoryStatusReader, InMemoryStatusWriter, StatusReader, StatusWriter} from "./src/StatusStore";
-import {StatusRetrievalHandler} from "./src/StatusRetrievalHandler";
+import {TravelStatusStorageHandler} from "./src/TravelStatusStorageHandler";
+import {SqlStatusReader, SqlTravelStatusWriter} from "./src/SqlStatusStore";
+import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter, StatusReader, StatusWriter} from "./src/StatusStore";
+import {TravelStatusRetrievalHandler} from "./src/TravelStatusRetrievalHandler";
 require('dotenv').config();
 
 (async () => {
@@ -14,15 +14,15 @@ require('dotenv').config();
   let statusReader: StatusReader;
   const statusStore: any[] = [];
   if (process.env.LOCAL) {
-    statusWriter = new InMemoryStatusWriter(statusStore);
-    statusReader = new InMemoryStatusReader(statusStore);
+    statusWriter = new InMemoryTravelStatusWriter(statusStore);
+    statusReader = new InMemoryTravelStatusReader(statusStore);
   } else {
     await new PostgresMigrator(STORE_CONNECTION_DETAILS, './database/migrations').migrate();
     const database = new PostgresDatabase(new Pool(STORE_CONNECTION_DETAILS));
-    statusWriter = new SqlStatusWriter(database);
+    statusWriter = new SqlTravelStatusWriter(database);
     statusReader = new SqlStatusReader(database);
   }
 
-  const server = new Server(new StatusStorageHandler(statusWriter), new StatusRetrievalHandler(statusReader));
+  const server = new Server(new TravelStatusStorageHandler(statusWriter), new TravelStatusRetrievalHandler(statusReader));
   server.start();
 })();

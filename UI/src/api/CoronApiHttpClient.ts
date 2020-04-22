@@ -1,7 +1,7 @@
 import {SimpleHttpClient} from "./SimpleHttpClient";
 import {Req, ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
-import {Status} from "../../../shared/Status";
+import {TravelStatus} from "../../../shared/TravelStatus";
 import {CoronApiClient, Result} from "./CoronApi";
 
 export class CoronApiHttpClient implements CoronApiClient {
@@ -27,7 +27,7 @@ export class CoronApiHttpClient implements CoronApiClient {
     return await this.makeRequest(ReqOf(Method.GET, `${this.coronApi}/status`));
   }
 
-  public async sendStatus(status: Status): Promise<Result> {
+  public async sendStatus(status: TravelStatus): Promise<Result> {
     return await this.makeRequest(ReqOf(Method.POST, `${this.coronApi}/status`, JSON.stringify(status)));
   }
 }

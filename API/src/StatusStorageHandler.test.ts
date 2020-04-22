@@ -1,20 +1,20 @@
-import {InMemoryStatusWriter} from "./StatusStore";
+import {InMemoryTravelStatusWriter} from "./StatusStore";
 import {ReqOf} from "http4js/core/Req";
-import {StatusStorageHandler} from "./StatusStorageHandler";
+import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {buildStatus} from "../../shared/Status";
+import {buildTravelStatus} from "../../shared/TravelStatus";
 
 describe('StatusStorageHandler', () => {
   it('should store a status', async () => {
     let statusStore: [] = [];
-    const statusWriter = new InMemoryStatusWriter(statusStore);
-    const statusHandler = new StatusStorageHandler(statusWriter);
+    const statusWriter = new InMemoryTravelStatusWriter(statusStore);
+    const statusHandler = new TravelStatusStorageHandler(statusWriter);
 
-    const status = buildStatus();
+    const status = buildTravelStatus();
     const res = await statusHandler.handle(ReqOf(Method.POST, '/status', JSON.stringify(status)));
 
     expect(res.status).to.eql(200);
-    expect(statusWriter.statusStore).to.eql([status]);
+    expect(statusWriter.travelStatuses).to.eql([status]);
   });
 });

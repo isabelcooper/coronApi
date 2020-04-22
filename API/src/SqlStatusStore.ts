@@ -1,9 +1,9 @@
 import {StatusReader, StatusWriter} from "./StatusStore";
 import {column, generateSqlInsert, SqlMapper, TableSchema} from "../database/postgres/Sql";
 import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
-import {Status} from "../../shared/Status";
+import {TravelStatus} from "../../shared/TravelStatus";
 
-export const statusSchema: TableSchema<Status> =
+export const travelStatusTableSchema: TableSchema<TravelStatus> =
   {
   tableName: 'status',
   fields: {
@@ -17,13 +17,13 @@ export const statusSchema: TableSchema<Status> =
 
 
 export class SqlStatusReader implements StatusReader {
-  protected mapper = new SqlMapper(statusSchema);
+  protected mapper = new SqlMapper(travelStatusTableSchema);
 
   constructor(private database: PostgresDatabase) {
 
   }
 
-  public async readAll(): Promise<Status[]> {
+  public async readAll(): Promise<TravelStatus[]> {
     return await this.database.inTransaction(async (client) => {
       const rows = (await client.query(
         'SELECT * FROM status ORDER BY updated DESC'
@@ -34,14 +34,14 @@ export class SqlStatusReader implements StatusReader {
 
 }
 
-export class SqlStatusWriter implements StatusWriter {
+export class SqlTravelStatusWriter implements StatusWriter {
   constructor(private database: PostgresDatabase) {
 
   }
 
-  store(status: Status): Promise<void> {
+  store(status: TravelStatus): Promise<void> {
     return this.database.inTransaction(async (client) => {
-      await client.query(generateSqlInsert(status, statusSchema))
+      await client.query(generateSqlInsert(status, travelStatusTableSchema))
     });
   }
 

@@ -3,26 +3,26 @@ import {Server} from "./server";
 import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {InMemoryStatusReader, InMemoryStatusWriter} from "./StatusStore";
-import {StatusStorageHandler} from "./StatusStorageHandler";
-import {SqlStatusWriter} from "./SqlStatusStore";
+import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter} from "./StatusStore";
+import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
+import {SqlTravelStatusWriter} from "./SqlStatusStore";
 import {Status} from "http4js/core/Status";
-import {StatusRetrievalHandler} from "./StatusRetrievalHandler";
-import {buildStatus} from "../../shared/Status";
+import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
+import {buildTravelStatus} from "../../shared/TravelStatus";
 
 describe('Server', () => {
   const httpClient = HttpClient;
   const port = 1111;
   let server: Server;
-  let statusStorageHandler: StatusStorageHandler;
-  let statusRetrievalHandler: StatusRetrievalHandler;
-  let statusStore: [];
+  let travelStatusStorageHandler: TravelStatusStorageHandler;
+  let travelStatusRetrievalHandler: TravelStatusRetrievalHandler;
+  let travelStatusStore: [];
 
   beforeEach(async () => {
-    statusStore = [];
-    statusStorageHandler = new StatusStorageHandler(new InMemoryStatusWriter(statusStore));
-    statusRetrievalHandler = new StatusRetrievalHandler(new InMemoryStatusReader(statusStore));
-    server = new Server(statusStorageHandler, statusRetrievalHandler, port);
+    travelStatusStore = [];
+    travelStatusStorageHandler = new TravelStatusStorageHandler(new InMemoryTravelStatusWriter(travelStatusStore));
+    travelStatusRetrievalHandler = new TravelStatusRetrievalHandler(new InMemoryTravelStatusReader(travelStatusStore));
+    server = new Server(travelStatusStorageHandler, travelStatusRetrievalHandler, port);
     server.start();
   });
 
@@ -36,12 +36,12 @@ describe('Server', () => {
   });
 
   it('should allow a record to be stored', async () => {
-    const status = buildStatus();
+    const travelStatus = buildTravelStatus();
 
     const response = await httpClient(ReqOf(
       Method.POST,
       `http://localhost:${port}/status`,
-      JSON.stringify(status)
+      JSON.stringify(travelStatus)
     ));
     expect(response.status).to.eql(200);
   });
@@ -52,4 +52,16 @@ describe('Server', () => {
     ));
     expect(response.status).to.eql(200);
   });
+
+  // it('should retrieve status for a specific country', async () => {
+  //   const status = buildTravelStatus();
+  //
+  //   travelStatusStore.push(status);
+  //
+  //   const response = await httpClient(ReqOf(
+  //     Method.GET,
+  //     `http://localhost:${port}/status`, JSON.stringify({country: status.country})
+  //   ));
+  //   expect(response.status).to.eql(200);
+  // });
 });

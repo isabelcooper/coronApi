@@ -1,25 +1,25 @@
 import {expect} from "chai";
-import {buildStatus, Status} from "../../../shared/Status";
+import {buildTravelStatus, TravelStatus} from "../../../shared/TravelStatus";
 import {Random} from "../../../API/utils/Random";
 import {AlwaysFailCoronApiClient, CoronApiClient, InMemoryCoronApiClient} from "./CoronApi";
 import {CoronApiHttpClient} from "./CoronApiHttpClient";
 import {Server} from "../../../API/src/server";
-import {StatusStorageHandler} from "../../../API/src/StatusStorageHandler";
-import {StatusRetrievalHandler} from "../../../API/src/StatusRetrievalHandler";
-import {InMemoryStatusReader, InMemoryStatusWriter} from "../../../API/src/StatusStore";
+import {TravelStatusStorageHandler} from "../../../API/src/TravelStatusStorageHandler";
+import {TravelStatusRetrievalHandler} from "../../../API/src/TravelStatusRetrievalHandler";
+import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter} from "../../../API/src/StatusStore";
 
-function buildRandomSetOfStatuses(rows?: number): Status[] {
+function buildRandomSetOfStatuses(rows?: number): TravelStatus[] {
   let i: number;
   const jsonRota = [];
   for (i = 0; i <= (rows || Random.integer(20)); i++) {
-    jsonRota.push(buildStatus())
+    jsonRota.push(buildTravelStatus())
   }
   return jsonRota;
 }
 
 describe('CoronApi', () => {
-  const store: Status[] = [];
-  const server = new Server(new StatusStorageHandler(new InMemoryStatusWriter(store)), new StatusRetrievalHandler(new InMemoryStatusReader(store)));
+  const store: TravelStatus[] = [];
+  const server = new Server(new TravelStatusStorageHandler(new InMemoryTravelStatusWriter(store)), new TravelStatusRetrievalHandler(new InMemoryTravelStatusReader(store)));
 
   before( () => {
     server.start()
@@ -32,7 +32,7 @@ describe('CoronApi', () => {
 
   const coronApiContract = (coronApiFn: () => CoronApiClient, cleanupFn: () => Promise<void>) => () => {
     const coronApiClient = coronApiFn();
-    let statuses: Status[];
+    let statuses: TravelStatus[];
 
     beforeEach(async () => {
       statuses = buildRandomSetOfStatuses();

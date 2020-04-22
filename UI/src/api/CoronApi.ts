@@ -1,4 +1,4 @@
-import {Status} from "../../../shared/Status";
+import {TravelStatus} from "../../../shared/TravelStatus";
 import {Clock} from "http4js/core/Clock";
 
 export interface Result<T = any> {
@@ -9,11 +9,11 @@ export interface Result<T = any> {
 
 export interface CoronApiClient {
   getAllStatuses(): Promise<Result>;
-  sendStatus(status: Status): Promise<Result>;
+  sendStatus(status: TravelStatus): Promise<Result>;
 }
 
 export class InMemoryCoronApiClient implements CoronApiClient {
-  constructor(public storedStatuses: Status[] =[], private clock: Clock = Date) {};
+  constructor(public storedStatuses: TravelStatus[] =[], private clock: Clock = Date) {};
 
   private static async success(): Promise<Result> {
     return {
@@ -29,7 +29,7 @@ export class InMemoryCoronApiClient implements CoronApiClient {
     }
   }
 
-  public async sendStatus(status: Status): Promise<Result> {
+  public async sendStatus(status: TravelStatus): Promise<Result> {
     await this.storedStatuses.push(status);
     return InMemoryCoronApiClient.success()
   }
@@ -48,7 +48,7 @@ export class AlwaysFailCoronApiClient implements CoronApiClient {
     return AlwaysFailCoronApiClient.success()
   }
 
-  public async sendStatus(status: Status): Promise<Result> {
+  public async sendStatus(status: TravelStatus): Promise<Result> {
     return AlwaysFailCoronApiClient.success()
   }
 }

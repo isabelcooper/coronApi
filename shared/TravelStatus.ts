@@ -13,7 +13,7 @@ enum TravelAdvice {
   OpenTravel = "openTravel"
 }
 
-export interface Status {
+export interface TravelStatus {
   country: string;
   flightStatus: FlightStatus;
   // excludedDestinations: string[];
@@ -21,7 +21,7 @@ export interface Status {
   updated: Date;
 }
 
-export function buildStatus(partial?: Partial<Status>): Status {
+export function buildTravelStatus(partial?: Partial<TravelStatus>): TravelStatus {
   return {
     country: Random.string('country'),
     flightStatus: Random.oneOf([FlightStatus.Full, FlightStatus.Partial, FlightStatus.Domestic]),

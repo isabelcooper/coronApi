@@ -1,29 +1,29 @@
-import {Status} from "../../shared/Status";
+import {TravelStatus} from "../../shared/TravelStatus";
 
-export class InMemoryStatusReader implements StatusReader {
-  constructor(public statusStore: Status[]) {
+export class InMemoryTravelStatusReader implements StatusReader {
+  constructor(public travelStatuses: TravelStatus[]) {
   }
 
-  public async readAll(): Promise<Status[]> {
-    return this.statusStore;
+  public async readAll(): Promise<TravelStatus[]> {
+    return this.travelStatuses;
   }
 
 }
 
 export interface StatusReader {
-  readAll(): Promise<Status[]>;
+  readAll(): Promise<TravelStatus[]>;
 }
 
 export interface StatusWriter {
-  store(status: Status): Promise<void>;
+  store(status: TravelStatus): Promise<void>;
 }
 
-export class InMemoryStatusWriter implements StatusWriter {
-  constructor(public statusStore: Status[]) {
+export class InMemoryTravelStatusWriter implements StatusWriter {
+  constructor(public travelStatuses: TravelStatus[]) {
   }
 
-  public async store(status: Status): Promise<void> {
-    this.statusStore.push(status);
+  public async store(status: TravelStatus): Promise<void> {
+    this.travelStatuses.push(status);
   }
 
 }

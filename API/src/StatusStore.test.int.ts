@@ -2,13 +2,13 @@ import {expect} from "chai";
 import {PostgresTestServer} from "../database/postgres/PostgresTestServer";
 import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
 import {
-  InMemoryStatusReader,
-  InMemoryStatusWriter,
+  InMemoryTravelStatusReader,
+  InMemoryTravelStatusWriter,
   StatusReader,
   StatusWriter
 } from "./StatusStore";
-import {SqlStatusReader, SqlStatusWriter} from "./SqlStatusStore";
-import {buildStatus, Status} from "../../shared/Status";
+import {SqlStatusReader, SqlTravelStatusWriter} from "./SqlStatusStore";
+import {buildTravelStatus, TravelStatus} from "../../shared/TravelStatus";
 
 describe('SqlStatusStore', function () {
   this.timeout(30000);
@@ -35,8 +35,8 @@ describe('SqlStatusStore', function () {
     });
 
     it('should store and read all statuses', async () => {
-      const status1 = buildStatus();
-      const status2 = buildStatus();
+      const status1 = buildTravelStatus();
+      const status2 = buildTravelStatus();
       await statusWriter.store(status1);
       await statusWriter.store(status2);
       //TODO: amend mapper to convert stored timestamp back to date
@@ -46,7 +46,7 @@ describe('SqlStatusStore', function () {
   };
 
   describe('StatusStore', statusStoreContract(
-    () => [new SqlStatusReader(database), new SqlStatusWriter(database)],
+    () => [new SqlStatusReader(database), new SqlTravelStatusWriter(database)],
     async () => {
       await database.inTransaction(async client => {
         await client.query('TRUNCATE TABLE status;');
@@ -54,8 +54,8 @@ describe('SqlStatusStore', function () {
     }));
   describe('InMemoryStatusStore', statusStoreContract(
     () => {
-      const store: Status[] = [];
-      return [new InMemoryStatusReader(store), new InMemoryStatusWriter(store)]
+      const store: TravelStatus[] = [];
+      return [new InMemoryTravelStatusReader(store), new InMemoryTravelStatusWriter(store)]
     },
     async () => {})
   );
