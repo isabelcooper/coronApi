@@ -32,6 +32,15 @@ export class SqlStatusReader implements StatusReader {
     });
   }
 
+  public async read(country: string): Promise<TravelStatus | null> {
+    return await this.database.inTransaction(async (client) => {
+      const row = (await client.query(
+        `SELECT * FROM current_travel_status WHERE country = '${country}';`
+      )).rows[0];
+      return this.mapper.map(row);
+    });
+  }
+
 }
 
 export class SqlTravelStatusWriter implements StatusWriter {

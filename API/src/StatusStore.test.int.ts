@@ -38,12 +38,21 @@ describe('SqlStatusStore', function () {
       //TODO: amend mapper to convert stored timestamp back to date
       expect(await statusReader.readAll()).to.deep.include.members([status1, status2]);
     });
+
     it('should only read the most recent status', async () => {
       const status1 = buildTravelStatus();
       const status2 = buildTravelStatus({country: status1.country, updated: Dates.addDays(status1.updated, 1)});
       await statusWriter.store(status1);
       await statusWriter.store(status2);
       expect(await statusReader.readAll()).to.deep.equal([ status2]);
+    });
+
+    it('should read travel status by country', async () => {
+      const status1 = buildTravelStatus();
+      const status2 = buildTravelStatus();
+      await statusWriter.store(status1);
+      await statusWriter.store(status2);
+      expect(await statusReader.read(status1.country)).to.deep.equal(status1);
     });
   };
 

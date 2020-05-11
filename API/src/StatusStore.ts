@@ -1,5 +1,11 @@
 import {TravelStatus} from "../../shared/TravelStatus";
 
+export interface StatusReader {
+  readAll(): Promise<TravelStatus[]>;
+
+  read(country: string): Promise<TravelStatus | null>;
+}
+
 export class InMemoryTravelStatusReader implements StatusReader {
   constructor(public travelStatuses: TravelStatus[]) {
   }
@@ -8,10 +14,9 @@ export class InMemoryTravelStatusReader implements StatusReader {
     return this.travelStatuses
   }
 
-}
-
-export interface StatusReader {
-  readAll(): Promise<TravelStatus[]>;
+  public async read(country: string): Promise<TravelStatus | null > {
+    return this.travelStatuses.find(status => status.country === country) || null;
+  }
 }
 
 export interface StatusWriter {
