@@ -14,6 +14,7 @@ export class Server {
     this.server = routes(Method.GET, '/health', async() => ResOf(200))
       .withPost('/status', travelStatusStorageHandler)
       .withGet('/status', travelStatusRetrievalHandler)
+      .withGet(`/status/{country}`, travelStatusRetrievalHandler)
       .asServer(new NativeHttpServer(parseInt(process.env.PORT!) || this.port));
   }
 

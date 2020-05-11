@@ -8,7 +8,7 @@ import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
 import {SqlTravelStatusWriter} from "./SqlStatusStore";
 import {Status} from "http4js/core/Status";
 import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
-import {buildTravelStatus} from "../../shared/TravelStatus";
+import {buildTravelStatus, TravelStatus} from "../../shared/TravelStatus";
 
 describe('Server', () => {
   const httpClient = HttpClient;
@@ -16,7 +16,7 @@ describe('Server', () => {
   let server: Server;
   let travelStatusStorageHandler: TravelStatusStorageHandler;
   let travelStatusRetrievalHandler: TravelStatusRetrievalHandler;
-  let travelStatusStore: [];
+  let travelStatusStore: TravelStatus[];
 
   beforeEach(async () => {
     travelStatusStore = [];
@@ -53,15 +53,18 @@ describe('Server', () => {
     expect(response.status).to.eql(200);
   });
 
-  // it('should retrieve status for a specific country', async () => {
-  //   const status = buildTravelStatus();
-  //
-  //   travelStatusStore.push(status);
-  //
-  //   const response = await httpClient(ReqOf(
-  //     Method.GET,
-  //     `http://localhost:${port}/status`, JSON.stringify({country: status.country})
-  //   ));
-  //   expect(response.status).to.eql(200);
-  // });
+  it('should retrieve status for a specific country', async () => {
+    const travelStatus = buildTravelStatus();
+    const travelStatus2 = buildTravelStatus();
+    travelStatusStore.push(travelStatus);
+    travelStatusStore.push(travelStatus2);
+
+    const response = await httpClient(ReqOf(
+      Method.GET,
+      `http://localhost:${port}/status/${travelStatus.country}`
+    ));
+    expect(response.status).to.eql(200);
+    let body = JSON.parse(response.bodyString());
+    expect(body.country).to.eql(travelStatus.country);
+  });
 });

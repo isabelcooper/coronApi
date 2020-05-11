@@ -7,7 +7,12 @@ import {buildTravelStatus} from "../../shared/TravelStatus";
 export class TravelStatusRetrievalHandler implements Handler {
   constructor(private statusReader: StatusReader){};
    public async handle(req: Req): Promise<Res> {
-     const statuses = await this.statusReader.readAll();
+     const pathname = req.uri.path().split('/status/')[1] || undefined;
+
+     const statuses = pathname
+       ? await this.statusReader.read(pathname)
+       : await this.statusReader.readAll();
+
      return ResOf(200, JSON.stringify(statuses))
   }
 }
