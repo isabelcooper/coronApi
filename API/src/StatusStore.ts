@@ -5,7 +5,7 @@ export class InMemoryTravelStatusReader implements StatusReader {
   }
 
   public async readAll(): Promise<TravelStatus[]> {
-    return this.travelStatuses;
+    return this.travelStatuses
   }
 
 }
@@ -19,11 +19,16 @@ export interface StatusWriter {
 }
 
 export class InMemoryTravelStatusWriter implements StatusWriter {
-  constructor(public travelStatuses: TravelStatus[]) {
+  constructor(public travelStatuses: TravelStatus[] =[]) {
   }
 
   public async store(status: TravelStatus): Promise<void> {
+    for(const key of this.travelStatuses.keys()) {
+      if(this.travelStatuses[key].country == status.country) {
+        this.travelStatuses[key] = status;
+        return;
+      }
+    }
     this.travelStatuses.push(status);
   }
-
 }

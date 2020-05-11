@@ -5,7 +5,7 @@ import {TravelStatus} from "../../shared/TravelStatus";
 
 export const travelStatusTableSchema: TableSchema<TravelStatus> =
   {
-  tableName: 'status',
+  tableName: 'travel_status',
   fields: {
     country: column('country'),
     flightStatus: column('flight_status'),
@@ -26,7 +26,7 @@ export class SqlStatusReader implements StatusReader {
   public async readAll(): Promise<TravelStatus[]> {
     return await this.database.inTransaction(async (client) => {
       const rows = (await client.query(
-        'SELECT * FROM status ORDER BY updated DESC'
+        'SELECT * FROM current_travel_status;'
       )).rows;
       return this.mapper.mapAll(rows);
     });
