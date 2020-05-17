@@ -5,8 +5,6 @@ import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
 import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter} from "./StatusStore";
 import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
-import {SqlTravelStatusWriter} from "./SqlStatusStore";
-import {Status} from "http4js/core/Status";
 import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
 import {buildTravelStatus, TravelStatus} from "../../shared/TravelStatus";
 
