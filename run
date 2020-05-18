@@ -83,7 +83,6 @@ case "${run_arg}" in
     if ! version_check; then install_node; fi
     run test API
     run test UI
-    API/deploy.sh
     ;;
  *)
     echo "Unexpected argument given:" $1
