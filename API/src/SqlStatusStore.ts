@@ -1,17 +1,18 @@
 import {StatusReader, StatusWriter} from "./StatusStore";
 import {column, generateSqlInsert, SqlMapper, TableSchema} from "../database/postgres/Sql";
-import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
 import {TravelStatus} from "./TravelStatus";
+import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
 
 export const travelStatusTableSchema: TableSchema<TravelStatus> =
   {
   tableName: 'travel_status',
   fields: {
     country: column('country'),
-    flightStatus: column('flight_status'),
-    // excludedDestinations: column('excluded_destinations'),
-    travelAdvice: column('travel_advice'),
-    updated: column('updated'),
+    domesticTravel: column('domestic_travel'),
+    noEntryCountries: column('no_entry_countries'),
+    quarantineOnArrival: column('quarantine'),
+    startDate: column('start_date'),
+    updated: column('updated')
   }
 };
 

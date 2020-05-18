@@ -26,8 +26,8 @@ describe('StatusRetrievalHandler', () => {
     expect(res.status).to.eql(200);
     const [retrievedStatus1, retrievedStatus2] = JSON.parse(res.bodyString());
     expect([
-      {...retrievedStatus1, updated: new Date(retrievedStatus1.updated)},
-      {...retrievedStatus2, updated: new Date(retrievedStatus2.updated)}
+      {...retrievedStatus1, updated: new Date(retrievedStatus1.updated), startDate: new Date(retrievedStatus1.startDate)},
+      {...retrievedStatus2, updated: new Date(retrievedStatus2.updated), startDate: new Date(retrievedStatus2.startDate)}
       ]
     ).to.eql([status1, status2]);
   });

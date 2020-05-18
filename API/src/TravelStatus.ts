@@ -1,32 +1,27 @@
 import {Random} from "../utils/Random";
 
-enum FlightStatus {
-  Domestic = "domestic",
-  Full = "full",
-  Partial = "partial"
-}
-
-enum TravelAdvice {
-  EnforcedLockdown = "enforcedLockdown",
-  RecommendedLockdown = "recommendedLockdown",
-  PartialWFH = "partialWFH",
-  OpenTravel = "openTravel"
+enum DomesticTravel {
+  GlobalBan = "global_ban",
+  Restricted = "restricted",
+  Open = "open"
 }
 
 export interface TravelStatus {
   country: string;
-  flightStatus: FlightStatus;
-  // excludedDestinations: string[];
-  travelAdvice: TravelAdvice;
+  domesticTravel: DomesticTravel;
+  noEntryCountries: string[];
+  quarantineOnArrival: boolean;
+  startDate: Date;
   updated: Date;
 }
 
 export function buildTravelStatus(partial?: Partial<TravelStatus>): TravelStatus {
   return {
     country: Random.string('country'),
-    flightStatus: Random.oneOf([FlightStatus.Full, FlightStatus.Partial, FlightStatus.Domestic]),
-    // excludedDestinations: [Random.string('country')],
-    travelAdvice: Random.oneOf([TravelAdvice.EnforcedLockdown, TravelAdvice.PartialWFH, TravelAdvice.OpenTravel, TravelAdvice.RecommendedLockdown]),
+    domesticTravel: Random.oneOf([DomesticTravel.Restricted, DomesticTravel.Open, DomesticTravel.GlobalBan]),
+    noEntryCountries:[],
+    quarantineOnArrival: Random.boolean(),
+    startDate: Random.date(),
     updated: Random.date(),
     ...partial
   }

@@ -15,6 +15,7 @@ describe('StatusStorageHandler', () => {
     const res = await statusHandler.handle(ReqOf(Method.POST, '/status', JSON.stringify(status)));
 
     expect(res.status).to.eql(200);
+
     expect(statusWriter.travelStatuses).to.eql([status]);
   });
 });
