@@ -1,4 +1,4 @@
-import {TravelStatus} from "../../shared/TravelStatus";
+import {TravelStatus} from "./TravelStatus";
 
 export interface StatusReader {
   readAll(): Promise<TravelStatus[]>;

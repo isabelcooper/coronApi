@@ -3,7 +3,7 @@ import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
 import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
-import {buildTravelStatus, TravelStatus} from "../../shared/TravelStatus";
+import {buildTravelStatus, TravelStatus} from "./TravelStatus";
 
 describe('StatusRetrievalHandler', () => {
   let statusStore: any[];

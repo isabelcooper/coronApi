@@ -1,7 +1,7 @@
 import {SimpleHttpClient} from "./SimpleHttpClient";
 import {Req, ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
-import {TravelStatus} from "../../../shared/TravelStatus";
+import {TravelStatus} from "../../../API/src/TravelStatus";
 import {CoronApiClient, Result} from "./CoronApi";
 
 export class CoronApiHttpClient implements CoronApiClient {

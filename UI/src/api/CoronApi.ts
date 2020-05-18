@@ -1,4 +1,4 @@
-import {TravelStatus} from "../../../shared/TravelStatus";
+import {TravelStatus} from "../../../API/src/TravelStatus";
 import {Clock} from "http4js/core/Clock";
 
 export interface Result<T = any> {

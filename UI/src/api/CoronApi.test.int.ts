@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {buildTravelStatus, TravelStatus} from "../../../shared/TravelStatus";
+import {buildTravelStatus, TravelStatus} from "../../../API/src/TravelStatus";
 import {Random} from "../../../API/utils/Random";
 import {AlwaysFailCoronApiClient, CoronApiClient, InMemoryCoronApiClient} from "./CoronApi";
 import {CoronApiHttpClient} from "./CoronApiHttpClient";

@@ -1,4 +1,4 @@
-import {Random} from "../API/utils/Random";
+import {Random} from "../utils/Random";
 
 enum FlightStatus {
   Domestic = "domestic",

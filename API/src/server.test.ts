@@ -6,7 +6,7 @@ import {expect} from "chai";
 import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter} from "./StatusStore";
 import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
 import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
-import {buildTravelStatus, TravelStatus} from "../../shared/TravelStatus";
+import {buildTravelStatus, TravelStatus} from "./TravelStatus";
 
 describe('Server', () => {
   const httpClient = HttpClient;

@@ -3,7 +3,7 @@ import {ReqOf} from "http4js/core/Req";
 import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {buildTravelStatus} from "../../shared/TravelStatus";
+import {buildTravelStatus} from "./TravelStatus";
 
 describe('StatusStorageHandler', () => {
   it('should store a status', async () => {

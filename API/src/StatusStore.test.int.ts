@@ -3,7 +3,7 @@ import {PostgresTestServer} from "../database/postgres/PostgresTestServer";
 import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
 import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter, StatusReader, StatusWriter} from "./StatusStore";
 import {SqlStatusReader, SqlTravelStatusWriter} from "./SqlStatusStore";
-import {buildTravelStatus, TravelStatus} from "../../shared/TravelStatus";
+import {buildTravelStatus, TravelStatus} from "./TravelStatus";
 import {Dates} from "../utils/Dates";
 
 describe('SqlStatusStore', function () {
