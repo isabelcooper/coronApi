@@ -1,6 +1,6 @@
 {
   "name": "covid-travel-store",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.ts",
   "scripts": {
     "test": "mocha **/*.test.ts --require ts-node/register",
