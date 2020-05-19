@@ -4,3 +4,4 @@
 package-lock.json
 coronapi-service-key.json
 dist
+.env
