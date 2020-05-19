@@ -7,6 +7,7 @@ enum DomesticTravel {
 }
 
 export interface TravelStatus {
+  iso: string;
   country: string;
   domesticTravel: DomesticTravel;
   noEntryCountries: string[];
@@ -17,6 +18,7 @@ export interface TravelStatus {
 
 export function buildTravelStatus(partial?: Partial<TravelStatus>): TravelStatus {
   return {
+    iso: Random.integer(100).toString(), // random string max 3 chars
     country: Random.string('country'),
     domesticTravel: Random.oneOf([DomesticTravel.Restricted, DomesticTravel.Open, DomesticTravel.GlobalBan]),
     noEntryCountries:[],

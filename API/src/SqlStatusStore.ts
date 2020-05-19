@@ -7,6 +7,7 @@ export const travelStatusTableSchema: TableSchema<TravelStatus> =
   {
   tableName: 'travel_status',
   fields: {
+    iso: column('iso'),
     country: column('country'),
     domesticTravel: column('domestic_travel'),
     noEntryCountries: column('no_entry_countries'),
