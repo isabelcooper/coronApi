@@ -1,9 +1,9 @@
-import {InMemoryTravelStatusWriter} from "./StatusStore";
+import {InMemoryTravelStatusWriter} from "../travelStatusStore/StatusStore";
 import {ReqOf} from "http4js/core/Req";
 import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {buildTravelStatus} from "./TravelStatus";
+import {buildTravelStatus} from "../travelStatusStore/TravelStatus";
 
 describe('StatusStorageHandler', () => {
   it('should store a status', async () => {

@@ -1,7 +1,7 @@
 import {StatusReader, StatusWriter} from "./StatusStore";
-import {column, generateSqlInsert, SqlMapper, TableSchema} from "../database/postgres/Sql";
+import {column, generateSqlInsert, SqlMapper, TableSchema} from "../../database/postgres/Sql";
 import {TravelStatus} from "./TravelStatus";
-import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
+import {PostgresDatabase} from "../../database/postgres/PostgresDatabase";
 
 export const travelStatusTableSchema: TableSchema<TravelStatus> =
   {

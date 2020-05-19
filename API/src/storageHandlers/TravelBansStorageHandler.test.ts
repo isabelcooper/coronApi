@@ -1,12 +1,12 @@
-import {InMemoryTravelStatusWriter} from "./StatusStore";
+import {InMemoryTravelStatusWriter} from "../travelStatusStore/StatusStore";
 import {ReqOf} from "http4js/core/Req";
 import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {buildTravelStatus, DomesticTravel, TravelStatus} from "./TravelStatus";
-import {Random} from "../utils/Random";
+import {buildTravelStatus, DomesticTravel, TravelStatus} from "../travelStatusStore/TravelStatus";
+import {Random} from "../../utils/Random";
 import {TravelBansStorageHandler} from "./TravelBansStorageHandler";
-import {Clock, FixedClock} from "../utils/Clock";
+import {Clock, FixedClock} from "../../utils/Clock";
 
 export interface TravelBan {
   country_name: string,

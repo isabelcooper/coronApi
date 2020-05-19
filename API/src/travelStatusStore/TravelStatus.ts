@@ -1,4 +1,4 @@
-import {Random} from "../utils/Random";
+import {Random} from "../../utils/Random";
 
 export enum DomesticTravel {
   GlobalBan = "global_ban",

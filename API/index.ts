@@ -1,8 +1,8 @@
 import {Server} from "./src/server";
-import {TravelStatusStorageHandler} from "./src/TravelStatusStorageHandler";
-import {StatusReader, StatusWriter} from "./src/StatusStore";
-import {TravelStatusRetrievalHandler} from "./src/TravelStatusRetrievalHandler";
-import {TravelBansStorageHandler} from "./src/TravelBansStorageHandler";
+import {TravelStatusStorageHandler} from "./src/storageHandlers/TravelStatusStorageHandler";
+import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter, StatusReader, StatusWriter} from "./src/travelStatusStore/StatusStore";
+import {TravelStatusRetrievalHandler} from "./src/retrievalHandlers/TravelStatusRetrievalHandler";
+import {TravelBansStorageHandler} from "./src/storageHandlers/TravelBansStorageHandler";
 
 export async function start(statusWriter: StatusWriter, statusReader: StatusReader) : Promise<void> {
   const server = new Server(

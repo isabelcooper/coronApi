@@ -1,12 +1,12 @@
 import {expect} from "chai";
-import {buildTravelStatus, TravelStatus} from "../../../API/src/TravelStatus";
+import {buildTravelStatus, TravelStatus} from "../../../API/src/travelStatusStore/TravelStatus";
 import {Random} from "../../../API/utils/Random";
 import {AlwaysFailCoronApiClient, CoronApiClient, InMemoryCoronApiClient} from "./CoronApi";
 import {CoronApiHttpClient} from "./CoronApiHttpClient";
 import {Server} from "../../../API/src/server";
-import {TravelStatusStorageHandler} from "../../../API/src/TravelStatusStorageHandler";
-import {TravelStatusRetrievalHandler} from "../../../API/src/TravelStatusRetrievalHandler";
-import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter} from "../../../API/src/StatusStore";
+import {TravelStatusStorageHandler} from "../../../API/src/storageHandlers/TravelStatusStorageHandler";
+import {TravelStatusRetrievalHandler} from "../../../API/src/retrievalHandlers/TravelStatusRetrievalHandler";
+import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter} from "../../../API/src/travelStatusStore/StatusStore";
 
 function buildRandomSetOfStatuses(rows?: number): TravelStatus[] {
   let i: number;

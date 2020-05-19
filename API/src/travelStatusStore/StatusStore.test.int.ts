@@ -1,10 +1,10 @@
 import {expect} from "chai";
-import {PostgresDatabase} from "../database/postgres/PostgresDatabase";
+import {PostgresDatabase} from "../../database/postgres/PostgresDatabase";
 import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter, StatusReader, StatusWriter} from "./StatusStore";
 import {SqlStatusReader, SqlTravelStatusWriter} from "./SqlStatusStore";
 import {buildTravelStatus, TravelStatus} from "./TravelStatus";
-import {Dates} from "../utils/Dates";
-import {PostgresTestServer} from "../database/postgres/PostgresTestServer";
+import {Dates} from "../../utils/Dates";
+import {PostgresTestServer} from "../../database/postgres/PostgresTestServer";
 
 describe('SqlStatusStore', function () {
   this.timeout(30000);

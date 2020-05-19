@@ -2,9 +2,9 @@ import {routes, Routing} from "http4js/core/Routing";
 import {Method} from "http4js/core/Methods";
 import {NativeHttpServer} from "http4js/servers/NativeHttpServer";
 import {ResOf} from "http4js/core/Res";
-import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
-import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
-import {TravelBansStorageHandler} from "./TravelBansStorageHandler";
+import {TravelStatusStorageHandler} from "./storageHandlers/TravelStatusStorageHandler";
+import {TravelStatusRetrievalHandler} from "./retrievalHandlers/TravelStatusRetrievalHandler";
+import {TravelBansStorageHandler} from "./storageHandlers/TravelBansStorageHandler";
 
 require('dotenv').config();
 

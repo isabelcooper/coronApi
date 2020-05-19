@@ -1,7 +1,7 @@
 import {Handler} from "http4js/core/HttpMessage";
 import {Req} from "http4js/core/Req";
 import {Res, ResOf} from "http4js/core/Res";
-import {StatusReader} from "./StatusStore";
+import {StatusReader} from "../travelStatusStore/StatusStore";
 
 export class TravelStatusRetrievalHandler implements Handler {
   constructor(private statusReader: StatusReader){};

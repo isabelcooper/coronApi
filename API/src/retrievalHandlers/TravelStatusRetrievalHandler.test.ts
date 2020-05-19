@@ -1,9 +1,9 @@
-import {InMemoryTravelStatusReader, StatusReader} from "./StatusStore";
+import {InMemoryTravelStatusReader, StatusReader} from "../travelStatusStore/StatusStore";
 import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
 import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
-import {buildTravelStatus, TravelStatus} from "./TravelStatus";
+import {buildTravelStatus, TravelStatus} from "../travelStatusStore/TravelStatus";
 
 describe('StatusRetrievalHandler', () => {
   let statusStore: any[];

@@ -1,8 +1,8 @@
 import {Req} from "http4js/core/Req";
 import {Res, ResOf} from "http4js/core/Res";
-import {StatusWriter} from "./StatusStore";
-import {buildTravelStatus} from "./TravelStatus";
-import {Clock} from "../utils/Clock";
+import {StatusWriter} from "../travelStatusStore/StatusStore";
+import {buildTravelStatus} from "../travelStatusStore/TravelStatus";
+import {Clock} from "../../utils/Clock";
 
 export class TravelBansStorageHandler {
   constructor(private statusWriter: StatusWriter, private clock : Clock = Date) {};

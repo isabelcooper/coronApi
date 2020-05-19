@@ -3,12 +3,12 @@ import {Server} from "./server";
 import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter, StatusWriter} from "./StatusStore";
-import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
-import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
-import {buildTravelStatus, TravelStatus} from "./TravelStatus";
-import {buildTravelBan} from "./TravelBansStorageHandler.test";
-import {TravelBansStorageHandler} from "./TravelBansStorageHandler";
+import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter, StatusWriter} from "./travelStatusStore/StatusStore";
+import {TravelStatusStorageHandler} from "./storageHandlers/TravelStatusStorageHandler";
+import {TravelStatusRetrievalHandler} from "./retrievalHandlers/TravelStatusRetrievalHandler";
+import {buildTravelStatus, TravelStatus} from "./travelStatusStore/TravelStatus";
+import {buildTravelBan} from "./storageHandlers/TravelBansStorageHandler.test";
+import {TravelBansStorageHandler} from "./storageHandlers/TravelBansStorageHandler";
 
 describe('Server', () => {
   const httpClient = HttpClient;
