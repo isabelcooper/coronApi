@@ -21,6 +21,8 @@ export class InMemoryTravelStatusReader implements StatusReader {
 
 export interface StatusWriter {
   store(status: TravelStatus): Promise<void>;
+
+  storeAll(travelStatuses: TravelStatus[]): Promise<void>;
 }
 
 export class InMemoryTravelStatusWriter implements StatusWriter {
@@ -35,5 +37,9 @@ export class InMemoryTravelStatusWriter implements StatusWriter {
       }
     }
     this.travelStatuses.push(status);
+  }
+
+  public async storeAll(travelStatuses: TravelStatus[]): Promise<void> {
+    this.travelStatuses.push(...travelStatuses);
   }
 }

@@ -30,11 +30,10 @@ describe('SqlStatusStore', function () {
       await cleanupFn();
     });
 
-    it('should store and read all statuses', async () => {
+    it('should store all and read all statuses', async () => {
       const status1 = buildTravelStatus();
       const status2 = buildTravelStatus();
-      await statusWriter.store(status1);
-      await statusWriter.store(status2);
+      await statusWriter.storeAll([status1, status2]);
       expect(await statusReader.readAll()).to.deep.include.members([status1, status2]);
     });
 

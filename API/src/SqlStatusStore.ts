@@ -56,4 +56,12 @@ export class SqlTravelStatusWriter implements StatusWriter {
     });
   }
 
+  public async storeAll(travelStatuses: TravelStatus[]): Promise<void> {
+    return this.database.inTransaction(async (client) => {
+      for (const travelStatus of travelStatuses) {
+        await client.query(generateSqlInsert(travelStatus, travelStatusTableSchema))
+      }
+    });
+  }
+
 }

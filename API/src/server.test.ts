@@ -3,24 +3,30 @@ import {Server} from "./server";
 import {ReqOf} from "http4js/core/Req";
 import {Method} from "http4js/core/Methods";
 import {expect} from "chai";
-import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter} from "./StatusStore";
+import {InMemoryTravelStatusReader, InMemoryTravelStatusWriter, StatusWriter} from "./StatusStore";
 import {TravelStatusStorageHandler} from "./TravelStatusStorageHandler";
 import {TravelStatusRetrievalHandler} from "./TravelStatusRetrievalHandler";
 import {buildTravelStatus, TravelStatus} from "./TravelStatus";
+import {buildTravelBan} from "./TravelBansStorageHandler.test";
+import {TravelBansStorageHandler} from "./TravelBansStorageHandler";
 
 describe('Server', () => {
   const httpClient = HttpClient;
   const port = 1111;
   let server: Server;
   let travelStatusStorageHandler: TravelStatusStorageHandler;
+  let travelBansStorageHandler: TravelBansStorageHandler;
   let travelStatusRetrievalHandler: TravelStatusRetrievalHandler;
   let travelStatusStore: TravelStatus[];
+  let statusWriter: StatusWriter;
 
   beforeEach(async () => {
     travelStatusStore = [];
-    travelStatusStorageHandler = new TravelStatusStorageHandler(new InMemoryTravelStatusWriter(travelStatusStore));
+    statusWriter = new InMemoryTravelStatusWriter(travelStatusStore);
     travelStatusRetrievalHandler = new TravelStatusRetrievalHandler(new InMemoryTravelStatusReader(travelStatusStore));
-    server = new Server(travelStatusStorageHandler, travelStatusRetrievalHandler, port);
+    travelStatusStorageHandler = new TravelStatusStorageHandler(statusWriter);
+    travelBansStorageHandler = new TravelBansStorageHandler(statusWriter);
+    server = new Server(travelStatusRetrievalHandler, travelStatusStorageHandler, travelBansStorageHandler, port);
     server.start();
   });
 
@@ -43,6 +49,17 @@ describe('Server', () => {
     ));
     expect(response.status).to.eql(200);
   });
+  it('should store all travelBans', async () => {
+    const travelBans = {'iso1' : buildTravelBan(), 'iso2' : buildTravelBan()};
+
+    const response = await httpClient(ReqOf(
+      Method.POST,
+      `http://localhost:${port}/travel-bans`,
+      JSON.stringify(travelBans)
+    ));
+    expect(response.status).to.eql(200);
+  });
+
   it('should retrieve all records', async () => {
     const response = await httpClient(ReqOf(
       Method.GET,

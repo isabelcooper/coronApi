@@ -1,6 +1,6 @@
 import {Random} from "../utils/Random";
 
-enum DomesticTravel {
+export enum DomesticTravel {
   GlobalBan = "global_ban",
   Restricted = "restricted",
   Open = "open"
@@ -10,8 +10,8 @@ export interface TravelStatus {
   iso: string;
   country: string;
   domesticTravel: DomesticTravel;
-  noEntryCountries: string[];
-  quarantineOnArrival: boolean;
+  noEntryCountries: string[] | null;
+  quarantineOnArrival: boolean | null;
   startDate: Date;
   updated: Date;
 }
