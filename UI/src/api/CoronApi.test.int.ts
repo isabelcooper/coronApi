@@ -19,7 +19,7 @@ function buildRandomSetOfStatuses(rows?: number): TravelStatus[] {
 
 describe('CoronApi', () => {
   const store: TravelStatus[] = [];
-  const server = new Server(new TravelStatusRetrievalHandler(new InMemoryTravelStatusReader(store)), new TravelStatusStorageHandler(new InMemoryTravelStatusWriter(store)), "");
+  const server = new Server(new TravelStatusRetrievalHandler(new InMemoryTravelStatusReader(store)), new TravelStatusStorageHandler(new InMemoryTravelStatusWriter(store)), "", "");
 
   before( () => {
     server.start()

@@ -5,10 +5,6 @@ import {TravelStatusRetrievalHandler} from "./src/retrievalHandlers/TravelStatus
 import {TravelBansStorageHandler} from "./src/storageHandlers/TravelBansStorageHandler";
 
 export async function start(statusWriter: StatusWriter, statusReader: StatusReader) : Promise<void> {
-  const server = new Server(
-    new TravelStatusRetrievalHandler(statusReader),
-    new TravelStatusStorageHandler(statusWriter),
-    new TravelBansStorageHandler(statusWriter)
-  );
+  const server = new Server(new TravelStatusRetrievalHandler(statusReader), new TravelStatusStorageHandler(statusWriter), new TravelBansStorageHandler(statusWriter), "");
   server.start();
 }

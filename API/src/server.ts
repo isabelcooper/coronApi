@@ -5,6 +5,7 @@ import {ResOf} from "http4js/core/Res";
 import {TravelStatusStorageHandler} from "./storageHandlers/TravelStatusStorageHandler";
 import {TravelStatusRetrievalHandler} from "./retrievalHandlers/TravelStatusRetrievalHandler";
 import {TravelBansStorageHandler} from "./storageHandlers/TravelBansStorageHandler";
+import {BasicAuthAuthenticator} from "./auth/Authenticator";
 
 require('dotenv').config();
 
@@ -14,11 +15,11 @@ export class Server {
   constructor(travelStatusRetrievalHandler: TravelStatusRetrievalHandler,
               travelStatusStorageHandler: TravelStatusStorageHandler,
               travelBansStorageHandler: TravelBansStorageHandler,
-              private port: number = 1010
-  ) {
+              authenticator: BasicAuthAuthenticator
+    , private port: number = 1010) {
     this.server = routes(Method.GET, '/health', async() => ResOf(200))
-      .withPost('/status', travelStatusStorageHandler)
-      .withPost('/travel-bans', travelBansStorageHandler)
+      .withPost('/status', authenticator.authFilter(travelStatusStorageHandler))
+      .withPost('/travel-bans', authenticator.authFilter(travelBansStorageHandler))
       .withGet('/status', travelStatusRetrievalHandler)
       .withGet(`/status/{country}`, travelStatusRetrievalHandler)
       .asServer(new NativeHttpServer(parseInt(process.env.PORT!) || this.port));
