@@ -40,7 +40,7 @@ describe('SqlStatusStore', function () {
 
     it('should only read the most recent status', async () => {
       const status1 = buildTravelStatus();
-      const status2 = buildTravelStatus({country: status1.country, startDate: Dates.addDays(status1.startDate, 1)});
+      const status2 = buildTravelStatus({country: status1.country, updated: Dates.addDays(status1.updated, 1)});
       await statusWriter.store(status1);
       await statusWriter.store(status2);
       expect(await statusReader.readAll()).to.deep.equal([ status2]);
