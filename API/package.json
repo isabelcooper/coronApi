@@ -1,11 +1,12 @@
 {
   "name": "covid-travel-store",
   "version": "1.0.5",
-  "main": "index.ts",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "mocha **/*.test.ts --require ts-node/register",
-    "start": "ts-node index.ts"
+    "start": "ts-node index.ts",
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",
