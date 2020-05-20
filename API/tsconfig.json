@@ -7,7 +7,6 @@
       "es2015",
       "dom"
     ],
-    "noEmit": true,
     "downlevelIteration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -15,14 +14,18 @@
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
     "noImplicitThis": true,
     "alwaysStrict": true,
     "skipLibCheck": true
   },
   "include": [
+    "*.ts",
     "**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
