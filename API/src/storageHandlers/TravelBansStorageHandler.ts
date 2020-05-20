@@ -19,8 +19,8 @@ export class TravelBansStorageHandler {
           domesticTravel: body[key].country_status,
           noEntryCountries: null,
           quarantineOnArrival: null,
-          updated: new Date(this.clock.now()),
-          startDate: new Date(body[key].start_date) || null,
+          updated: body[key].updated ? new Date(body[key].updated) : new Date(this.clock.now()),
+          startDate: body[key].start_date ? new Date(body[key].start_date) : null,
         }))
     }
 

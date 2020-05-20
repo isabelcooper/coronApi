@@ -12,7 +12,7 @@ export interface TravelStatus {
   domesticTravel: DomesticTravel;
   noEntryCountries: string[] | null;
   quarantineOnArrival: boolean | null;
-  startDate: Date;
+  startDate: Date | null;
   updated: Date;
 }
 
