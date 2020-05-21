@@ -21,7 +21,7 @@ install_node () {
         set -e
     fi
 
-    nvm use "${NODE_VERSION}"
+    nvm install "${NODE_VERSION}"
 }
 
 install_node_dependencies () {
