@@ -34,10 +34,10 @@ export class SqlStatusReader implements StatusReader {
     });
   }
 
-  public async read(country: string): Promise<TravelStatus | null> {
+  public async read(iso: string): Promise<TravelStatus | null> {
     return await this.database.inTransaction(async (client) => {
       const row = (await client.query(
-        `SELECT * FROM current_travel_status WHERE country = '${country}';`
+        `SELECT * FROM current_travel_status WHERE iso = '${iso}';`
       )).rows[0];
       return this.mapper.map(row);
     });

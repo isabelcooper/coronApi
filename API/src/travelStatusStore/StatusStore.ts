@@ -3,7 +3,7 @@ import {TravelStatus} from "./TravelStatus";
 export interface StatusReader {
   readAll(): Promise<TravelStatus[]>;
 
-  read(country: string): Promise<TravelStatus | null>;
+  read(iso: string): Promise<TravelStatus | null>;
 }
 
 export class InMemoryTravelStatusReader implements StatusReader {
@@ -14,8 +14,8 @@ export class InMemoryTravelStatusReader implements StatusReader {
     return this.travelStatuses
   }
 
-  public async read(country: string): Promise<TravelStatus | null > {
-    return this.travelStatuses.find(status => status.country === country) || null;
+  public async read(iso: string): Promise<TravelStatus | null > {
+    return this.travelStatuses.find(status => status.iso === iso) || null;
   }
 }
 
@@ -31,7 +31,7 @@ export class InMemoryTravelStatusWriter implements StatusWriter {
 
   public async store(status: TravelStatus): Promise<void> {
     for(const key of this.travelStatuses.keys()) {
-      if(this.travelStatuses[key].country == status.country) {
+      if(this.travelStatuses[key].iso == status.iso) {
         this.travelStatuses[key] = status;
         return;
       }
