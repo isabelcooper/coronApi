@@ -105,11 +105,11 @@ describe('Server', () => {
 
       const response = await httpClient(ReqOf(
         Method.GET,
-        `http://localhost:${port}/status/${travelStatus.country}`
+        `http://localhost:${port}/status/${travelStatus.iso}`
       ));
       expect(response.status).to.eql(200);
       let body = JSON.parse(response.bodyString());
-      expect(body.country).to.eql(travelStatus.country);
+      expect(body.iso).to.eql(travelStatus.iso);
     });
   });
 });
