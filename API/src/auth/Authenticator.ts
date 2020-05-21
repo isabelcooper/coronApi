@@ -17,7 +17,6 @@ export class BasicAuthAuthenticator implements Authenticator {
   authFilter(handler: Handler | HttpHandler): Handler {
     return asHandler(async (req: Req) => {
       const header = req.header('authorization');
-      console.log(header);
       const authHeader = (header && header.slice(6)) || '';
       const [username, password] = Buffer.from(authHeader, 'base64').toString().split(':');
 
