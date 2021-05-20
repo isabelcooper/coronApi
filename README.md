@@ -18,3 +18,4 @@ A run script on the main repo allows:
 `./start-ui` - starts the UI server locally
 
 *temporarily disabled sorry
+# boolean
